@@ -2,7 +2,9 @@ use proteus::lexer::lexer::Lexer;
 
 fn main() {
     let mut lexer = Lexer::new(
-        "function multiply(value: number, factor: number = 2): number {
+        "
+// function
+function multiply(value: number, factor: number = 2): number {
   return value * factor;
 }",
     );

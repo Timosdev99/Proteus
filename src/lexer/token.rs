@@ -14,6 +14,7 @@ pub enum Token {
     Export,
     If,
     Else,
+    For,
 
     //symbols
     LParen,
@@ -25,6 +26,7 @@ pub enum Token {
     Comma,
     Arrow,
     Assign,
+    Comments,
 
     //Arithemetics
     Multiplication,
@@ -32,6 +34,8 @@ pub enum Token {
     Substraction,
     Division,
     Equate,
+    Less,
+    Greater,
 
     TypeAnnotation(String),
 

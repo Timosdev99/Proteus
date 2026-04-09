@@ -37,6 +37,31 @@ impl Lexer {
         }
     }
 
+    fn skip_comments(&mut self) {
+        if self.current() == Some('/') && self.peek() == Some('/') {
+            self.advance();
+            self.advance();
+
+            while let Some(ch) = self.current() {
+                if ch == '\n' {
+                    break;
+                }
+                self.advance();
+            }
+        }
+    }
+
+    fn skip_whitespace_and_comments(&mut self) {
+        loop {
+            let start_pos = self.pos;
+            self.skip_whitespace();
+            self.skip_comments();
+            if self.pos == start_pos {
+                break;
+            }
+        }
+    }
+
     fn read_words(&mut self) -> String {
         let mut word = String::new();
 
@@ -83,7 +108,7 @@ impl Lexer {
         let mut tokens = Vec::new();
 
         loop {
-            self.skip_whitespace();
+            self.skip_whitespace_and_comments();
 
             match self.current() {
                 None => {
@@ -142,6 +167,16 @@ impl Lexer {
                     tokens.push(Token::Division);
                 }
 
+                Some('>') => {
+                    self.advance();
+                    tokens.push(Token::Greater);
+                }
+
+                Some('<') => {
+                    self.advance();
+                    tokens.push(Token::Less);
+                }
+
                 Some(ch) if ch.is_ascii_digit() => {
                     let n = self.read_number();
                     tokens.push(Token::NumberLiteral(n))
@@ -158,6 +193,7 @@ impl Lexer {
                         "export" => Token::Export,
                         "if" => Token::If,
                         "else" => Token::Else,
+                        "for" => Token::For,
                         _ => Token::Identifier(word),
                     };
                     tokens.push(token)
