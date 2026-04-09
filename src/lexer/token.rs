@@ -12,6 +12,9 @@ pub enum Token {
     Const,
     Let,
     Export,
+    If,
+    Else,
+
     //symbols
     LParen,
     RParen,
@@ -21,12 +24,14 @@ pub enum Token {
     Semicolon,
     Comma,
     Arrow,
+    Assign,
 
     //Arithemetics
     Multiplication,
     Addition,
     Substraction,
     Division,
+    Equate,
 
     TypeAnnotation(String),
 

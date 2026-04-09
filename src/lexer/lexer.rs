@@ -156,6 +156,8 @@ impl Lexer {
                         "const" => Token::Const,
                         "let" => Token::Let,
                         "export" => Token::Export,
+                        "if" => Token::If,
+                        "else" => Token::Else,
                         _ => Token::Identifier(word),
                     };
                     tokens.push(token)
@@ -166,8 +168,13 @@ impl Lexer {
                         self.advance();
                         self.advance();
                         tokens.push(Token::Arrow);
+                    } else if self.peek() == Some('=') {
+                        self.advance();
+                        self.advance();
+                        tokens.push(Token::Equate);
                     } else {
                         self.advance();
+                        tokens.push(Token::Assign);
                     }
                 }
 
